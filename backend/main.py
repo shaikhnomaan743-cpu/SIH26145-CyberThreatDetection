@@ -1,10 +1,20 @@
 from fastapi import FastAPI
-from backend.models import Flow
+from fastapi.middleware.cors import CORSMiddleware
+from backend.models import Flow, Alert
 from backend.database import init_db, insert_flow, get_all_flows, get_all_alerts
 
 app = FastAPI(title="SIH26145 Cyber Threat Detection API")
 
-# Initialize database tables when starting server
+# Enable CORS for React frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows requests from React dashboard
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Initialize database tables
 init_db()
 
 @app.get("/")
@@ -30,7 +40,7 @@ def read_alerts():
 
 @app.post("/api/predict")
 def predict_threat(flow: Flow):
-    # This will be replaced with actual ML model from Person 3 later
+    # Placeholder until Person 3 provides the trained model
     return {
         "is_malicious": False,
         "confidence": 0.90,
