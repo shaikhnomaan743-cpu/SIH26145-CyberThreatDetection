@@ -1,9 +1,10 @@
+import os
 import sys
 import time
 import pandas as pd
 import requests
 
-API_URL = "https://sih26145-cyberthreatdetection.onrender.com/api/flows"
+API_URL = os.environ.get("THREX_API_URL", "http://127.0.0.1:8000/api/flows")
 
 def send_flows(csv_path, delay_seconds=0.5):
     """

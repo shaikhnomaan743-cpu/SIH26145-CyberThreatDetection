@@ -1,0 +1,23 @@
+[
+  {
+    "ip": "185.220.101.1",
+    "threat_type": "Watchlist",
+    "severity": "High",
+    "source": "Local watchlist",
+    "notes": "Documented Tor exit / scanner range used in lab injects."
+  },
+  {
+    "ip": "45.77.32.11",
+    "threat_type": "Watchlist",
+    "severity": "Medium",
+    "source": "Local watchlist",
+    "notes": "Previously associated with credential stuffing in tabletop exercises."
+  },
+  {
+    "ip": "103.45.67.89",
+    "threat_type": "Watchlist",
+    "severity": "Medium",
+    "source": "Local watchlist",
+    "notes": "Noisy reconnaissance source from internal purple-team runs."
+  }
+]

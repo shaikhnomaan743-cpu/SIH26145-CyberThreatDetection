@@ -2,3 +2,10 @@ fastapi
 uvicorn
 sqlalchemy
 pydantic
+python-multipart
+pandas
+numpy
+scikit-learn
+joblib
+scapy
+requests

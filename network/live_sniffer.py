@@ -1,10 +1,10 @@
+import os
 import time
 from datetime import datetime
 import requests
 from scapy.all import IP, TCP, UDP, conf, sniff
 
-# Person 1's live Render API endpoint
-API_URL = "https://sih26145-cyberthreatdetection.onrender.com/api/flows"
+API_URL = os.environ.get("THREX_API_URL", "http://127.0.0.1:8000/api/flows")
 
 # Global dictionary to track live connections/flows in memory
 # Key: (src_ip, dst_ip, src_port, dst_port, protocol)

@@ -1,25 +1,31 @@
+import os
+
+import joblib
 import pandas as pd
 from sklearn.ensemble import IsolationForest
-import joblib
 
-# 1. Load the preprocessed data from Step 3.2
-df = pd.read_csv('preprocessed_flows.csv')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_PATH = os.path.join(BASE_DIR, "preprocessed_flows.csv")
+MODEL_PATH = os.path.join(BASE_DIR, "isolation_forest.pkl")
 
-# 2. Initialize the Isolation Forest
-# 'contamination' is the estimated percentage of anomalies in the dataset (5% here)
-model = IsolationForest(n_estimators=100, contamination=0.05, random_state=42)
 
-print("Training Isolation Forest model...")
-model.fit(df)
+def main():
+    df = pd.read_csv(DATA_PATH)
+    model = IsolationForest(
+        n_estimators=200,
+        contamination=0.02,
+        random_state=42,
+        n_jobs=-1,
+    )
+    print(f"Training Isolation Forest on {len(df)} rows...")
+    model.fit(df)
+    predictions = model.predict(df)
+    anomalies = (predictions == -1).sum()
+    normal = (predictions == 1).sum()
+    print(f"Training complete. Flagged {anomalies} of {len(df)} as anomalies ({normal} inliers).")
+    joblib.dump(model, MODEL_PATH)
+    print(f"Saved {MODEL_PATH}")
 
-# 3. Predict on the training data to see how many anomalies it flags
-predictions = model.predict(df)
-anomalies = (predictions == -1).sum()
-normal = (predictions == 1).sum()
 
-print(f"Training complete!")
-print(f"Detected {anomalies} anomalies and {normal} normal flows.")
-
-# 4. Save the trained model
-joblib.dump(model, 'isolation_forest.pkl')
-print("Model successfully saved to 'isolation_forest.pkl'")
+if __name__ == "__main__":
+    main()
